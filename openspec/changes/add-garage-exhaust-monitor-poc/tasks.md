@@ -1,8 +1,8 @@
 ## 1. Hardware Configuration & Driver Setup
 
-- [ ] 1.1 Create `config.py` defining GPIO and ADC pin constants (ADC0/GP26 for MQ-7, ADC1/GP27 for MQ-135, I2C bus pins, SPI bus pins for SD slot, button pin) and sampling intervals, verifying configuration loads cleanly.
-- [ ] 1.2 Vendor or provide standard MicroPython driver `ssd1306.py` and verify module imports without syntax errors.
-- [ ] 1.3 Vendor or provide standard MicroPython driver `sdcard.py` and verify module imports without syntax errors.
+- [x] 1.1 Create `config.py` defining GPIO and ADC pin constants (ADC0/GP26 for MQ-7, ADC1/GP27 for MQ-135, I2C bus pins, SPI bus pins for SD slot, button pin) and sampling intervals, verifying configuration loads cleanly.
+- [x] 1.2 Vendor or provide standard MicroPython driver `ssd1306.py` and verify module imports without syntax errors.
+- [x] 1.3 Vendor or provide standard MicroPython driver `sdcard.py` and verify module imports without syntax errors.
 
 ## 2. Core Hardware Abstractions
 
