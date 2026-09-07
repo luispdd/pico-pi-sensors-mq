@@ -1,6 +1,6 @@
 ## Purpose
 
-Provides standalone garage exhaust monitoring by measuring carbon monoxide and air quality metrics, presenting them on a local display, and recording session data to an SD card.
+Provides standalone garage exhaust monitoring by measuring carbon monoxide metrics, presenting them on a local display, and recording session data to an SD card.
 
 ## ADDED Requirements
 
@@ -24,5 +24,5 @@ The system SHALL display real-time sensor metrics and logging status on the loca
 
 #### Scenario: Displaying exhaust metrics
 - **WHEN** a new sensor reading is polled
-- **THEN** the OLED screen updates the current, minimum, and maximum values for the MQ-7 and MQ-135 sensors
+- **THEN** the OLED screen updates the current, minimum, and maximum values for the MQ-7 sensor
 - **AND** the total count of recorded data rows is updated on the screen

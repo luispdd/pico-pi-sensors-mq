@@ -8,36 +8,19 @@ Runtime: MicroPython
 # Analog Gas Sensors (ADC)
 # ---------------------------------------------------------------------------
 # MQ-7: Carbon Monoxide (CO) sensor
-# MQ-135: Air Quality / Hazardous gases sensor
-# Both sensors operate on 5V with analog outputs scaled down to 3.3V max
+# The sensor operates on 5V with analog outputs scaled down to 2.5V max
+# Ideally it should use a 10k and 20k ohm voltage divider to scale the output to 3.3V
+# Note: The MQ-7 sensor needs to be heated to operate (3 to 5 minutes), which is not implemented in this project
 
-# ---------------------------------------------------------------------------
-# Option 1: 10k ohm / 20k ohm voltage divider
-# ---------------------------------------------------------------------------
-# using a voltage divider (e.g., 10k ohm / 20k ohm network).
-#PIN_MQ7_ADC = 26       # GP26 / ADC0
-#PIN_MQ135_ADC = 27     # GP27 / ADC1
-
-#ADC_VREF = 3.3         # ADC reference voltage (Volts)
-#ADC_MAX_U16 = 65535    # MicroPython read_u16() 16-bit range
-
-# Voltage divider scaling: Vin = Vout * (R1 + R2) / R2
-# With R1 = 10k, R2 = 20k: (10k + 20k) / 20k = 1.5 multiplier (3.33V * 1.5 = 5.0V)
-#VOLTAGE_DIVIDER_RATIO = 1.5
-# ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Option 2: 10k ohm / 10k ohm voltage divider
-# ---------------------------------------------------------------------------
-# using a voltage divider (e.g., 10k ohm / 10k ohm network).
+# Using a voltage divider (e.g., 10k ohm / 10k ohm network).
 PIN_MQ7_ADC = 26       # GP26 / ADC0
-PIN_MQ135_ADC = 27     # GP27 / ADC1
 
 ADC_VREF = 3.3         # ADC reference voltage (Volts)
 ADC_MAX_U16 = 65535    # MicroPython read_u16() 16-bit range
 
 # Voltage divider scaling: Vin = Vout * (R1 + R2) / R2
-# With R1 = 10k, R2 = 10k: (10k + 10k) / 10k = 2 multiplier (3.33V * 2 = 6.66V)
+# With R1 = 10k, R2 = 10k: (10k + 10k) / 10k = 2.0 multiplier
+# Max sensor Vin = 5.0V -> Max ADC Vout = 2.5V (safely within 3.3V limit)
 VOLTAGE_DIVIDER_RATIO = 2.0
 
 
@@ -82,6 +65,6 @@ BUTTON_DEBOUNCE_MS = 50  # Debounce window in milliseconds
 # ---------------------------------------------------------------------------
 # Sampling & Timing Intervals
 # ---------------------------------------------------------------------------
-SENSOR_SAMPLE_INTERVAL_MS = 1000      # 1 Hz sensor polling
-DISPLAY_REFRESH_INTERVAL_MS = 250     # 4 Hz display updates
-STORAGE_FLUSH_INTERVAL_MS = 5000      # Safe flush interval during active logging
+SENSOR_SAMPLE_INTERVAL_MS = 5000      # 5 seconds sensor polling
+DISPLAY_REFRESH_INTERVAL_MS = 500     # 0.5 seconds display updates
+STORAGE_FLUSH_INTERVAL_MS = 60000      # 1 minute flush interval during active logging
