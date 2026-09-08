@@ -1,28 +1,29 @@
 ## Purpose
 
-Provides standalone garage exhaust monitoring by measuring carbon monoxide metrics, presenting them on a local display, and recording session data to an SD card.
+Provides standalone garage exhaust monitoring by measuring carbon monoxide metrics, calculating PPM and mass concentration ($\text{mg/m}^3$), presenting them on an OLED screen, and allowing statistics reset via a hardware button.
 
 ## ADDED Requirements
 
-### Requirement: Push Button Session Control
-The system SHALL toggle between a stopped state and an active logging state when the hardware push button is pressed.
+### Requirement: Push Button Statistics Reset
+The system SHALL reset the minimum and maximum recorded PPM statistics when the hardware push button is pressed.
 
-#### Scenario: Starting a new logging session
-- **WHEN** the user presses the push button while in the `STOPPED` state
-- **THEN** the system generates a new incremented CSV file (e.g., `log_002.csv`)
-- **AND** the display status updates to indicate logging is active
-- **AND** the system begins writing sensor data to the SD card at the configured interval
-
-#### Scenario: Stopping an active session safely
-- **WHEN** the user presses the push button while in the `LOGGING` state
-- **THEN** the system flushes the buffer and closes the CSV file
-- **AND** the display status updates to `STOPPED`
-- **AND** no further data is written until the next session is initiated
+#### Scenario: Resetting peak and baseline statistics
+- **WHEN** the user presses the push button on GP14
+- **THEN** the system resets `min_ppm` and `max_ppm` tracking
+- **AND** the display status temporarily shows `[STATS RESET]` for 2 seconds
+- **AND** real-time monitoring continues seamlessly
 
 ### Requirement: Real-time UI Updates
-The system SHALL display real-time sensor metrics and logging status on the local OLED screen.
+The system SHALL display real-time sensor metrics on the local OLED screen without divider lines.
 
-#### Scenario: Displaying exhaust metrics
-- **WHEN** a new sensor reading is polled
-- **THEN** the OLED screen updates the current, minimum, and maximum values for the MQ-7 sensor
-- **AND** the total count of recorded data rows is updated on the screen
+#### Scenario: Displaying exhaust metrics in PPM and mg/m³
+- **WHEN** a new sensor reading is polled at 1-second intervals
+- **THEN** the OLED screen displays:
+  - Line 0: `SENSOR MONITOR`
+  - Line 1: Current status (`[MONITORING]` or temporary alert)
+  - Line 2: `MQ-7 CO Sensor`
+  - Line 3: Current concentration in PPM
+  - Line 4: Minimum concentration in PPM
+  - Line 5: Maximum concentration in PPM
+  - Line 6: Mass concentration in $\text{mg/m}^3$
+  - Line 7: Button guidance (`Press to reset`)

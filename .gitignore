@@ -1,2 +1,4 @@
 /.agents
 /proposal-sensors-air-project.md
+__pycache__/
+*.pyc

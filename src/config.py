@@ -1,6 +1,6 @@
 """Hardware and application configuration for Garage Exhaust Monitor PoC.
 
-Target Microcontroller: Waveshare RP2350-PiZero
+Target Microcontroller: Raspberry Pi Pico 2
 Runtime: MicroPython
 """
 
@@ -25,9 +25,25 @@ VOLTAGE_DIVIDER_RATIO = 2.0
 
 
 # ---------------------------------------------------------------------------
+# MQ-7 Gas Sensor (CO) & PPM Conversion Constants
+# ---------------------------------------------------------------------------
+# The MQ-7 sensor operates on 5V with analog output scaled down via 10k/10k divider.
+# Power law formula: PPM = A * (Rs / R0) ^ B
+# Where Rs = ((Vc - Vout) / Vout) * RL
+SENSOR_NAME = "MQ-7"
+SENSOR_SUPPLY_VOLTAGE = 5.0     # Vc (Volts)
+RL_VALUE_KOHMS = 10.0           # Load resistance RL in kilo-ohms
+RO_CLEAN_AIR_KOHMS = 10.0       # Calibrated clean air sensor resistance in kilo-ohms
+MQ7_PPM_A = 98.322              # Empirical sensitivity coefficient for CO
+MQ7_PPM_B = -1.458              # Empirical sensitivity exponent for CO
+CO_MG_M3_FACTOR = 1.146         # Conversion factor: 1 PPM CO = 1.146 mg/m3 at 25°C, 1 atm
+
+
+# ---------------------------------------------------------------------------
 # I2C Bus & OLED Display (SSD1306)
 # ---------------------------------------------------------------------------
 # 0.96 inch 128x64 Monochrome OLED Display
+APP_TITLE = "SENSOR MONITOR"
 I2C_ID = 1             # I2C peripheral ID (0 or 1)
 PIN_I2C_SDA = 2        # GP2 (Pi 40-pin header pin 3)
 PIN_I2C_SCL = 3        # GP3 (Pi 40-pin header pin 5)
@@ -36,21 +52,6 @@ I2C_FREQ = 400_000     # 400 kHz Fast Mode
 OLED_WIDTH = 128       # Display width in pixels
 OLED_HEIGHT = 64       # Display height in pixels
 OLED_I2C_ADDR = 0x3C   # Default SSD1306 I2C address
-
-
-# ---------------------------------------------------------------------------
-# SPI Bus & Onboard TF / MicroSD Card
-# ---------------------------------------------------------------------------
-# Onboard TF slot routed via SPI peripheral
-SPI_ID = 1             # SPI peripheral ID
-PIN_SPI_SCK = 10       # GP10 / SPI1 SCK
-PIN_SPI_MOSI = 11      # GP11 / SPI1 TX
-PIN_SPI_MISO = 12      # GP12 / SPI1 RX
-PIN_SPI_CS = 13        # GP13 / SPI1 CS
-
-SD_MOUNT_POINT = "/sd"
-LOG_FILE_PREFIX = "log_"
-LOG_FILE_EXT = ".csv"
 
 
 # ---------------------------------------------------------------------------
@@ -65,6 +66,6 @@ BUTTON_DEBOUNCE_MS = 50  # Debounce window in milliseconds
 # ---------------------------------------------------------------------------
 # Sampling & Timing Intervals
 # ---------------------------------------------------------------------------
-SENSOR_SAMPLE_INTERVAL_MS = 5000      # 5 seconds sensor polling
-DISPLAY_REFRESH_INTERVAL_MS = 500     # 0.5 seconds display updates
-STORAGE_FLUSH_INTERVAL_MS = 60000      # 1 minute flush interval during active logging
+SENSOR_SAMPLE_INTERVAL_MS = 1000      # 1 second sensor polling (1 Hz)
+DISPLAY_REFRESH_INTERVAL_MS = 250     # 250 ms display updates (4 Hz)
+
