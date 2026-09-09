@@ -13,7 +13,7 @@ Runtime: MicroPython
 # Note: The MQ-7 sensor needs to be heated to operate (3 to 5 minutes), which is not implemented in this project
 
 # Using a voltage divider (e.g., 10k ohm / 10k ohm network).
-PIN_MQ7_ADC = 26       # GP26 / ADC0
+PIN_MQ7_ADC = 26       # GP26 (Pico physical pin 31, ADC0)
 
 ADC_VREF = 3.3         # ADC reference voltage (Volts)
 ADC_MAX_U16 = 65535    # MicroPython read_u16() 16-bit range
@@ -45,8 +45,8 @@ CO_MG_M3_FACTOR = 1.146         # Conversion factor: 1 PPM CO = 1.146 mg/m3 at 2
 # 0.96 inch 128x64 Monochrome OLED Display
 APP_TITLE = "SENSOR MONITOR"
 I2C_ID = 1             # I2C peripheral ID (0 or 1)
-PIN_I2C_SDA = 2        # GP2 (Pi 40-pin header pin 3)
-PIN_I2C_SCL = 3        # GP3 (Pi 40-pin header pin 5)
+PIN_I2C_SDA = 2        # GP2 (Pico physical pin 4, I2C1 SDA)
+PIN_I2C_SCL = 3        # GP3 (Pico physical pin 5, I2C1 SCL)
 I2C_FREQ = 400_000     # 400 kHz Fast Mode
 
 OLED_WIDTH = 128       # Display width in pixels
@@ -59,7 +59,7 @@ OLED_I2C_ADDR = 0x3C   # Default SSD1306 I2C address
 # ---------------------------------------------------------------------------
 # Momentary tactile button tied to ground with internal pull-up resistor.
 # Pressed = Logic LOW (0), Released = Logic HIGH (1).
-PIN_BUTTON = 14        # GP14 (Pi 40-pin header pin 8)
+PIN_BUTTON = 14        # GP14 (Pico physical pin 19)
 BUTTON_DEBOUNCE_MS = 50  # Debounce window in milliseconds
 
 

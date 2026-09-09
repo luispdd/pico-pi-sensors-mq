@@ -42,29 +42,31 @@ A standalone proof-of-concept (PoC) carbon monoxide (CO) exhaust monitor designe
 
 ## Pinout & Wiring
 
-### 1. MQ-7 Gas Sensor (Analog ADC)
-The MQ-7 runs on a 5V supply and outputs 0–5V analog signal. To protect the RP2350 3.3V ADC, the analog output passes through a 10kΩ/10kΩ voltage divider (voltage divider ratio of 2.0, max 2.5V output).
+The table and list below provide the connections for the standard **Raspberry Pi Pico 2** (RP2350 DIP board):
 
-- **VCC:** Connect to 5V supply (`VBUS` / Pin 40)
-- **GND:** Connect to Ground (`GND` / Pin 38)
+### 1. MQ-7 Gas Sensor (Analog ADC)
+The MQ-7 runs on a 5V supply and outputs a 0–5V analog signal. To protect the RP2350 3.3V ADC, the analog output passes through a 10kΩ/10kΩ voltage divider (ratio of 2.0, max 2.5V output):
+
+- **VCC:** Connect to 5V rail (`VBUS`, physical pin 40)
+- **GND:** Connect to Ground (`GND`, physical pin 38 or any GND pin: 3, 8, 13, 18, 23, 28)
 - **AOUT (Analog Out):** Connected to voltage divider:
   - Resistor $R_1$ (10kΩ) between MQ-7 `AOUT` and RP2350 `GP26`
   - Resistor $R_2$ (10kΩ) between RP2350 `GP26` and `GND`
-- **RP2350 Pin:** `GP26` (Pin 31, ADC0)
+- **Pico 2 Pin:** `GP26` (physical pin 31, ADC0)
 
 ### 2. SSD1306 OLED Display (I2C)
 Powered from the 3.3V logic rail (`3V3(OUT)` / Pin 36) using I2C bus 1 at 400 kHz:
 
-| OLED Pin | Pico 2 Pin | Physical Pin # | Description |
+| OLED Pin | Pico 2 Pin Name | Pico Physical Pin # | Description |
 | :--- | :--- | :--- | :--- |
 | **VCC** | `3V3(OUT)` | Pin 36 | 3.3V Power |
-| **GND** | `GND` | Pin 38 | Ground |
+| **GND** | `GND` | Pin 38 (or any GND: 3, 8, 13, 18, 23, 28) | Ground |
 | **SDA** | `GP2` | Pin 4 | I2C1 Data |
 | **SCL** | `GP3` | Pin 5 | I2C1 Clock |
 
 ### 3. Tactile Push Button
-- One terminal to `GP14` (Pin 19)
-- Opposite terminal to `GND` (Pin 18 or 23)
+- One terminal to `GP14` (physical pin 19)
+- Opposite terminal to `GND` (e.g., physical pin 18, 23, or 38)
 - Utilizes the RP2350 internal pull-up resistor (active LOW: pressed = 0, released = 1).
 
 ---
